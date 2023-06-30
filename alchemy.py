@@ -16,37 +16,35 @@ class Alchemy(JsonSerializable):
     def __init__(
         self,
         cards_loader: Callable[[list[Card]], None],
-        players: list[str],
+        players: list[Player],
         cards_count: int,
         handler: Callable[[Alchemy, Player], None],
     ) -> None:
         self.cards_count: int = cards_count
         self.handler: Callable[[Alchemy, Player], None] = handler
         self.crafts: list[tuple[Player, CraftableCard]] = list()
+        self.shelf: Shelf = Shelf()
+        self.players = players
 
         self.stack: CardStack = CardStack()
         cards_loader(self.stack.cards)
         self.stack.shuffle()
 
-        self.shelf: Shelf = Shelf()
         for _ in range(self.cards_count):
             self.shelf.put(self.stack.pop())
-
-        self.players: list[Player] = list()
-        for player_name in players:
-            player = Player(player_name)
-            for _ in range(self.cards_count):
+            for player in players:
                 player.cards.append(self.stack.pop())
-            self.players.append(player)
 
     def process(self) -> None:
+        """Запуск игры"""
         queue: Queue[Player] = Queue(len(self.players))
         for player in self.players:
             queue.put(player)
 
         acts_count = 0
+        cant_act_players: list[Player] = []
 
-        while not queue.empty():
+        while len(cant_act_players) != len(self.players):
             current_player = queue.get()
 
             # Добор карт в начале хода
@@ -58,6 +56,11 @@ class Alchemy(JsonSerializable):
 
             # Действие игрока
             if current_player.can_act():
+                if current_player in cant_act_players:
+                    cant_act_players.remove(current_player)
                 self.handler(self, current_player)
                 acts_count += 1
-                queue.put(current_player)
+            else:
+                cant_act_players.append(current_player)
+
+            queue.put(current_player)

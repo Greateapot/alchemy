@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-
-from alchemy.enums import Ingredient, CardType, SpellType
+from alchemy.enums import AbcIngredient, AbcCardType, AbcSpellType
 from alchemy.json_serializable import JsonSerializable
 
 
@@ -13,15 +12,15 @@ class Card(JsonSerializable):
 
     def __init__(
         self,
-        card_type: CardType,
+        card_type: AbcCardType,
         title: str,
         short_title: str,
-        drop_ingredients: tuple[Ingredient],
+        drop_ingredients: tuple[AbcIngredient],
     ) -> None:
-        self.card_type: CardType = card_type
+        self.card_type: AbcCardType = card_type
         self.title: str = title
         self.short_title: str = short_title
-        self.drop_ingredients: tuple[Ingredient] = drop_ingredients
+        self.drop_ingredients: tuple[AbcIngredient] = drop_ingredients
 
 
 class CraftableCard(Card):
@@ -41,12 +40,12 @@ class CraftableCard(Card):
 
     def __init__(
         self,
-        card_type: CardType,
+        card_type: AbcCardType,
         title: str,
         short_title: str,
-        drop_ingredients: tuple[Ingredient],
+        drop_ingredients: tuple[AbcIngredient],
         points: int,
-        craft_ingredients: tuple[Ingredient | CraftableCard | CardType],
+        craft_ingredients: tuple[AbcIngredient | CraftableCard | AbcCardType],
     ) -> None:
         super().__init__(card_type, title, short_title, drop_ingredients)
         self.points = points
@@ -56,9 +55,7 @@ class CraftableCard(Card):
 
 class SpellCard(Card):
     """
-    Заклинание. Содержит тип заклинания (`enums.spell_type`) и функцию (`handler`)
-    применения этого заклинания. Функция принмает два аргумента: объект игры и объект
-    игрока, использующего это заклинание.
+    Заклинание. Содержит тип заклинания (`enums.spell_type`).
 
     toml:
     [[cards]]
@@ -67,19 +64,18 @@ class SpellCard(Card):
     title = "Заклинание Разрушения"
     short_title = "SPoD"
     drop_ingredients = ["ingredient.snake_eye"]
-    handler = "spell_of_knowledge_handler"
     """
 
     def __init__(
         self,
-        card_type: CardType,
+        card_type: AbcCardType,
         title: str,
         short_title: str,
-        drop_ingredients: tuple[Ingredient],
-        spell_type: SpellType,
+        drop_ingredients: tuple[AbcIngredient],
+        spell_type: AbcSpellType,
     ) -> None:
         super().__init__(card_type, title, short_title, drop_ingredients)
-        self.spell_type: SpellType = spell_type
+        self.spell_type: AbcSpellType = spell_type
 
 
 __all__ = (

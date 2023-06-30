@@ -1,4 +1,4 @@
-from enum import Enum, auto
+from enum import Enum
 
 
 class Log2Enum(int, Enum):
@@ -7,14 +7,13 @@ class Log2Enum(int, Enum):
         return 2**count
 
 
-CardType = Log2Enum
-Ingredient = Log2Enum
-SpellType = Log2Enum
+AbcCardType = Log2Enum
+AbcIngredient = Log2Enum
+AbcSpellType = Log2Enum
 
 
 __all__ = (
-    auto,
-    CardType,
-    Ingredient,
-    SpellType,
+    AbcCardType,
+    AbcIngredient,
+    AbcSpellType,
 )

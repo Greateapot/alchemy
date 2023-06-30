@@ -1,5 +1,5 @@
 from alchemy.card_stack import CardStack
-from alchemy.cards import Card, Ingredient
+from alchemy.cards import Card, AbcIngredient
 from alchemy.json_serializable import JsonSerializable
 
 
@@ -7,7 +7,7 @@ class Shelf(JsonSerializable):
     def __init__(self) -> None:
         self.card_stacks: dict[int, CardStack] = dict()
 
-    def can_pop(self, ingredient: Ingredient) -> bool:
+    def can_pop(self, ingredient: AbcIngredient) -> bool:
         """Можно ли достать карту из шкафа с конкретным ингредиентом
 
         Args:
@@ -23,7 +23,7 @@ class Shelf(JsonSerializable):
         else:
             return False
 
-    def pop(self, ingredient: Ingredient) -> Card:
+    def pop(self, ingredient: AbcIngredient) -> Card:
         """Достать карту с конкретным ингредиетом из шкафа
 
         Args:

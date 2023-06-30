@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from .card_stack import CardStack
 from .cards import Card, CraftableCard, SpellCard
-from .enums import CardType, Ingredient, SpellType, auto
+from .enums import AbcCardType, AbcIngredient, AbcSpellType
 from .alchemy import Alchemy
 from .json_serializable import JsonSerializable
 from .player import Player
@@ -14,10 +14,9 @@ __all__ = (
     Card,
     CraftableCard,
     SpellCard,
-    CardType,
-    Ingredient,
-    SpellType,
-    auto,
+    AbcCardType,
+    AbcIngredient,
+    AbcSpellType,
     Alchemy,
     JsonSerializable,
     Player,
