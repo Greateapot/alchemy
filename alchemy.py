@@ -15,33 +15,29 @@ class Alchemy(JsonSerializable):
 
     def __init__(
         self,
-        cards: list[Card],
+        cards_loader: Callable[[list[Card]], None],
         players: list[str],
         cards_count: int,
         handler: Callable[[Alchemy, Player], None],
     ) -> None:
-        self.stack: CardStack = CardStack()
-        self.shelf: Shelf = Shelf()
-        self.players: list[Player] = list()
-
         self.cards_count: int = cards_count
         self.handler: Callable[[Alchemy, Player], None] = handler
-
         self.crafts: list[tuple[Player, CraftableCard]] = list()
 
-        self.stack.cards = cards
+        self.stack: CardStack = CardStack()
+        cards_loader(self.stack.cards)
         self.stack.shuffle()
 
+        self.shelf: Shelf = Shelf()
         for _ in range(self.cards_count):
             self.shelf.put(self.stack.pop())
 
+        self.players: list[Player] = list()
         for player_name in players:
             player = Player(player_name)
             for _ in range(self.cards_count):
                 player.cards.append(self.stack.pop())
             self.players.append(player)
-
-        # self.process()
 
     def process(self) -> None:
         queue: Queue[Player] = Queue(len(self.players))
