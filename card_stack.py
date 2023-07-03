@@ -30,5 +30,9 @@ class CardStack(JsonSerializable):
     def shuffle(self) -> None:
         shuffle(self.cards)
 
+    def top(self) -> Card:
+        assert self.can_pop()
+        return self.cards[-1]
+
 
 __all__ = (CardStack,)

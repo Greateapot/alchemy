@@ -13,6 +13,8 @@ from alchemy.shelf import Shelf
 class Alchemy(JsonSerializable):
     """Игра. Здесь храняться игроки, стопка карт и шкаф ингредиентов."""
 
+    DEBUG = True
+
     def __init__(
         self,
         cards_loader: Callable[[list[Card]], None],

@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+import alchemy
+
 from copy import copy
-from enum import Enum
 from json import dumps
 from typing import Any
 
@@ -23,21 +24,15 @@ class JsonSerializable:
     def default(obj: JsonSerializable) -> dict[str, Any]:
         data = dict()
 
-        if hasattr(obj, "__dict__"):
+        if isinstance(obj, alchemy.ExtendedEnum):
+            data["index"] = obj.index
+            data["title"] = obj.title
+
+        elif hasattr(obj, "__dict__"):
             for attr_name in filter(lambda x: not x.startswith("_"), obj.__dict__):
                 attr_value = getattr(obj, attr_name)
                 if attr_value is not None:
-                    if isinstance(attr_value, Enum):
-                        data[attr_name] = str(attr_value)
-                    elif (
-                        isinstance(attr_value, list)
-                        and len(attr_value) > 0
-                        and isinstance(attr_value[0], Enum)
-                        # а было бы возможно использовать generic...
-                    ):
-                        data[attr_name] = list(map(str, attr_value))
-                    else:
-                        data[attr_name] = attr_value
+                    data[attr_name] = attr_value
 
         return {"_": obj.__class__.__name__, **data}
 

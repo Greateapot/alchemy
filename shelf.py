@@ -16,7 +16,7 @@ class Shelf(JsonSerializable):
         Returns:
             bool: Истина если можно, Ложь если не можно
         """
-        i_key = ingredient.value
+        i_key = ingredient.index
         for key, card_stack in self.card_stacks.items():
             if i_key & key and card_stack.can_pop():
                 return True
@@ -34,7 +34,7 @@ class Shelf(JsonSerializable):
         """
         assert self.can_pop(ingredient)
 
-        i_key = str(ingredient)
+        i_key = ingredient.index
         for key, card_stack in self.card_stacks.items():
             if i_key & key and card_stack.can_pop():
                 card = card_stack.pop()
@@ -50,12 +50,19 @@ class Shelf(JsonSerializable):
         """
         key = 0
         for i in card.drop_ingredients:
-            key += i.value
+            key += i.index
 
         if self.card_stacks.get(key, None) is None:
             self.card_stacks[key] = CardStack()
 
         self.card_stacks[key].put(card)
+
+    def toplist(self) -> list[Card]:
+        return [
+            card_stack.top()
+            for card_stack in self.card_stacks.values()
+            if card_stack.can_pop()
+        ]
 
 
 __all__ = (Shelf,)
