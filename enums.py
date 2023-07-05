@@ -34,7 +34,7 @@ class Log2Enum(ExtendedEnum):
 
 
 AbcCardType = Log2Enum
-AbcIngredient = Log2Enum
+AbcElement = Log2Enum
 AbcSpellType = Log2Enum
 
 
@@ -42,6 +42,6 @@ __all__ = (
     ExtendedEnum,
     Log2Enum,
     AbcCardType,
-    AbcIngredient,
+    AbcElement,
     AbcSpellType,
 )

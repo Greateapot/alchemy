@@ -1,5 +1,5 @@
 from alchemy.card_stack import CardStack
-from alchemy.cards import Card, AbcIngredient
+from alchemy.cards import Card, AbcElement
 from alchemy.json_serializable import JsonSerializable
 
 
@@ -7,34 +7,34 @@ class Shelf(JsonSerializable):
     def __init__(self) -> None:
         self.card_stacks: dict[int, CardStack] = dict()
 
-    def can_pop(self, ingredient: AbcIngredient) -> bool:
-        """Можно ли достать карту из шкафа с конкретным ингредиентом
+    def can_pop(self, element: AbcElement) -> bool:
+        """Можно ли достать карту из шкафа с конкретным элементом
 
         Args:
-            ingredient (Ingredient): искомый ингредиент
+            element (AbcElement): искомый элемент
 
         Returns:
             bool: Истина если можно, Ложь если не можно
         """
-        i_key = ingredient.index
+        i_key = element.index
         for key, card_stack in self.card_stacks.items():
             if i_key & key and card_stack.can_pop():
                 return True
         else:
             return False
 
-    def pop(self, ingredient: AbcIngredient) -> Card:
-        """Достать карту с конкретным ингредиетом из шкафа
+    def pop(self, element: AbcElement) -> Card:
+        """Достать карту с конкретным элементом из шкафа
 
         Args:
-            ingredient (Ingredient): искомый ингредиент
+            element (AbcElement): искомый элемент
 
         Returns:
-            Card: Карта с искомым ингредиентом
+            Card: Карта с искомым элементом
         """
-        assert self.can_pop(ingredient)
+        assert self.can_pop(element)
 
-        i_key = ingredient.index
+        i_key = element.index
         for key, card_stack in self.card_stacks.items():
             if i_key & key and card_stack.can_pop():
                 card = card_stack.pop()
@@ -49,7 +49,7 @@ class Shelf(JsonSerializable):
             card (Card): карта
         """
         key = 0
-        for i in card.drop_ingredients:
+        for i in card.drop_elements:
             key += i.index
 
         if self.card_stacks.get(key, None) is None:

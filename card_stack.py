@@ -7,8 +7,8 @@ from alchemy.json_serializable import JsonSerializable
 class CardStack(JsonSerializable):
     """Стопка карт"""
 
-    def __init__(self) -> None:
-        self.cards: list[Card] = list()
+    def __init__(self, cards: list[Card] = None) -> None:
+        self.cards: list[Card] = cards if cards is not None else list()
 
     def can_pop(self) -> bool:
         """Можно ли взять карту"""

@@ -4,33 +4,29 @@ from queue import Queue
 from typing import Callable
 
 from alchemy.card_stack import CardStack
-from alchemy.cards import Card, CraftableCard
+from alchemy.cards import CraftableCard
 from alchemy.json_serializable import JsonSerializable
 from alchemy.player import Player
 from alchemy.shelf import Shelf
 
 
 class Alchemy(JsonSerializable):
-    """Игра. Здесь храняться игроки, стопка карт и шкаф ингредиентов."""
-
-    DEBUG = True
+    """Игра. Здесь храняться игроки, стопка карт и шкаф элементов."""
 
     def __init__(
         self,
-        cards_loader: Callable[[list[Card]], None],
+        card_stack: CardStack,
         players: list[Player],
         cards_count: int,
         handler: Callable[[Alchemy, Player], None],
     ) -> None:
+        self.stack: CardStack = card_stack
+        self.players = players
         self.cards_count: int = cards_count
         self.handler: Callable[[Alchemy, Player], None] = handler
+
         self.crafts: list[tuple[Player, CraftableCard]] = list()
         self.shelf: Shelf = Shelf()
-        self.players = players
-
-        self.stack: CardStack = CardStack()
-        cards_loader(self.stack.cards)
-        self.stack.shuffle()
 
         for _ in range(self.cards_count):
             self.shelf.put(self.stack.pop())
@@ -66,3 +62,5 @@ class Alchemy(JsonSerializable):
                 cant_act_players.append(current_player)
 
             queue.put(current_player)
+
+        # TODO: end game stats
