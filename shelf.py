@@ -23,8 +23,8 @@ class Shelf(JsonSerializable):
         else:
             return False
 
-    def pop(self, element: AbcElement) -> Card:
-        """Достать карту с конкретным элементом из шкафа
+    def pop(self, card: Card) -> None:
+        """Удалить карту с конкретным элементом из шкафа
 
         Args:
             element (AbcElement): искомый элемент
@@ -32,15 +32,15 @@ class Shelf(JsonSerializable):
         Returns:
             Card: Карта с искомым элементом
         """
-        assert self.can_pop(element)
+        assert self.can_pop(card.drop_elements[0])
 
-        i_key = element.index
+        i_key = sum([i.index for i in card.drop_elements])
         for key, card_stack in self.card_stacks.items():
             if i_key & key and card_stack.can_pop():
                 card = card_stack.pop()
                 if not card_stack.can_pop():
                     self.card_stacks.pop(key)
-                return card
+                break
 
     def put(self, card: Card) -> None:
         """Положить карту в шкаф

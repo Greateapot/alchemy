@@ -33,9 +33,16 @@ class Log2Enum(ExtendedEnum):
         return (2**count,) + args
 
 
-AbcCardType = Log2Enum
-AbcElement = Log2Enum
-AbcSpellType = Log2Enum
+class AbcCardType(Log2Enum):
+    pass
+
+
+class AbcElement(Log2Enum):
+    pass
+
+
+class AbcSpellType(Log2Enum):
+    pass
 
 
 __all__ = (
