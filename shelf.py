@@ -34,9 +34,8 @@ class Shelf(JsonSerializable):
         """
         assert self.can_pop(card.drop_elements[0])
 
-        i_key = sum([i.index for i in card.drop_elements])
         for key, card_stack in self.card_stacks.items():
-            if i_key & key and card_stack.can_pop():
+            if card_stack.top().short_title == card.short_title:
                 card = card_stack.pop()
                 if not card_stack.can_pop():
                     self.card_stacks.pop(key)
