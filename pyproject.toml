@@ -1,0 +1,31 @@
+
+[tool.poetry]
+name = "alchemy"
+version = "0.0.1"
+authors = ["Greateapot998 <a@a.a>"] # Так уж почту указать надо
+description = 'Цифровая версия настольной игры "Зельварение. Практикум."'
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/Greateapot998/alchemy"
+repository = "https://github.com/Greateapot998/alchemy"
+classifiers = [ # А зачем это?
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Typing :: Typed",
+]
+packages = [
+    { include = "alchemy", from = "src" },
+    { include = "alchemy_original_console", from = "src" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+aenum = "^3.1.15"
+typing_extensions = "^4.7.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "setuptools", "wheel"]
+build-backend = "poetry.core.masonry.api"

@@ -1,3 +1,5 @@
+# Основа настольной игры, с ее помощью создаются сами вариации игр.
+
 from __future__ import annotations
 
 from .card_stack import CardStack

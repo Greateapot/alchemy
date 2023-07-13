@@ -2,7 +2,6 @@ from alchemy.card_stack import CardStack
 from alchemy.cards import Card, AbcElement
 from alchemy.json_serializable import JsonSerializable
 
-
 class Shelf(JsonSerializable):
     def __init__(self) -> None:
         self.card_stacks: dict[int, CardStack] = dict()
