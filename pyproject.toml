@@ -1,14 +1,13 @@
-
 [tool.poetry]
 name = "alchemy"
 version = "0.0.1"
-authors = ["Greateapot998 <a@a.a>"] # Так уж почту указать надо
+authors = ["Greateapot <greateapot998@gmail.com>"]
 description = 'Цифровая версия настольной игры "Зельварение. Практикум."'
 license = "MIT"
 readme = "README.md"
-homepage = "https://github.com/Greateapot998/alchemy"
-repository = "https://github.com/Greateapot998/alchemy"
-classifiers = [ # А зачем это?
+homepage = "https://github.com/Greateapot/alchemy"
+repository = "https://github.com/Greateapot/alchemy"
+classifiers = [
     "Environment :: Console",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.10",
