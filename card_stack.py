@@ -27,6 +27,14 @@ class CardStack(JsonSerializable):
         """
         self.cards.append(card)
 
+    def put_down(self, card: Card) -> None:
+        """Положить карту в стопку снизу
+
+        Args:
+            card (Card): карта, кт кладем в стопку
+        """
+        self.cards.insert(0, card)
+
     def shuffle(self) -> None:
         shuffle(self.cards)
 

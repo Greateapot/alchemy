@@ -1,3 +1,5 @@
+# этот кусок кода я одолжил у либы pyrogram, уж очень он мне понравился
+
 from __future__ import annotations
 
 import alchemy

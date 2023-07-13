@@ -47,14 +47,25 @@ class Shelf(JsonSerializable):
         Args:
             card (Card): карта
         """
-        key = 0
-        for i in card.drop_elements:
-            key += i.index
+        key = sum([i.index for i in card.drop_elements])
 
         if self.card_stacks.get(key, None) is None:
             self.card_stacks[key] = CardStack()
 
         self.card_stacks[key].put(card)
+
+    def put_down(self, card: Card) -> None:
+        """Положить карту в шкаф снизу
+
+        Args:
+            card (Card): карта
+        """
+        key = sum([i.index for i in card.drop_elements])
+
+        if self.card_stacks.get(key, None) is None:
+            self.card_stacks[key] = CardStack()
+
+        self.card_stacks[key].put_down(card)
 
     def toplist(self) -> list[Card]:
         return [
