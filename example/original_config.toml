@@ -1,0 +1,718 @@
+[settings]
+hand_cards_count = 4
+shuffle_cards_on_load = true
+tags_is_visible = true
+
+
+[enums]
+elements = [
+    'snake_eye',
+    'mandrake_root',
+    'blood_stone',
+    'mushrooms',
+    'phoenix_feather',
+    'air_crystal',
+    'spring_water',
+    'thought_energy',
+    'fern_flower',
+    'batwing',
+    'the_quintessence_of_will',
+    'fiery_light',
+    'astral_energy',
+    'ether_wave',
+    'dragon_tooth',
+    'belladonna',
+]
+
+spells = ["spell_of_knowledge", 'spell_of_destruction', 'spell_of_transform']
+
+card_types = [
+    'potion',
+    'elixir',
+    'powder',
+    'great_elixir',
+    'supreme_elixir',
+    'amulet',
+    'great_amulet',
+    'entity',
+]
+
+
+[[cards]]
+tag = 'potion:elixir_of_fire'
+title = 'Эликсир Огня'
+type = 'potion:*'
+drop_elements = ['element:the_quintessence_of_will']
+points = 2
+craft_ingredients = ['element:ether_wave', 'element:fiery_light']
+
+[[cards]]
+tag = 'potion:elixir_of_eternal_youth'
+title = 'Эликсир Вечной Молодости'
+type = 'potion:*'
+drop_elements = ['element:dragon_tooth']
+points = 2
+craft_ingredients = ['element:ether_wave', 'element:phoenix_feather']
+
+[[cards]]
+tag = 'potion:solution_of_eternity'
+title = 'Раствор Вечности'
+type = 'potion:*'
+drop_elements = ['element:mandrake_root']
+points = 2
+craft_ingredients = ['element:mushrooms', 'element:phoenix_feather']
+
+[[cards]]
+tag = 'potion:flask_of_divination'
+title = 'Настой Прорицания'
+type = 'potion:*'
+drop_elements = ['element:blood_stone']
+points = 2
+craft_ingredients = ['element:mushrooms', 'element:air_crystal']
+
+[[cards]]
+tag = 'potion:elixir_of_invisibility'
+title = 'Эликсир Невидимости'
+type = 'potion:*'
+drop_elements = ['element:astral_energy']
+points = 2
+craft_ingredients = ['element:thought_energy', 'element:air_crystal']
+
+[[cards]]
+tag = 'potion:isidas_mortum'
+title = 'Исидас Мортум'
+type = 'potion:*'
+drop_elements = ['element:snake_eye']
+points = 2
+craft_ingredients = ['element:thought_energy', 'element:batwing']
+
+[[cards]]
+tag = 'potion:elixir_of_oblivion'
+title = 'Эликсир Забвения'
+type = 'potion:*'
+drop_elements = ['element:fern_flower']
+points = 2
+craft_ingredients = ['element:belladonna', 'element:batwing']
+
+[[cards]]
+tag = 'potion:elixir_of_eternal_sleep'
+title = 'Эликсир Вечного Сна'
+type = 'potion:*'
+drop_elements = ['element:fiery_light']
+points = 2
+craft_ingredients = ['element:belladonna', 'element:spring_water']
+
+[[cards]]
+tag = 'potion:emanation_of_power'
+title = 'Эманация Власти'
+type = 'potion:*'
+drop_elements = ['element:ether_wave']
+points = 2
+craft_ingredients = ['element:the_quintessence_of_will', 'element:spring_water']
+
+[[cards]]
+tag = 'potion:solution-charm'
+title = 'Раствор-Оберег'
+type = 'potion:*'
+drop_elements = ['element:phoenix_feather']
+points = 2
+craft_ingredients = ['element:the_quintessence_of_will', 'element:dragon_tooth']
+
+[[cards]]
+tag = 'potion:elixir_of_loyalty'
+title = 'Эликсир Верности'
+type = 'potion:*'
+drop_elements = ['element:mushrooms']
+points = 2
+craft_ingredients = ['element:mandrake_root', 'element:dragon_tooth']
+
+[[cards]]
+tag = 'potion:love_potion'
+title = 'Любовное Зелье'
+type = 'potion:*'
+drop_elements = ['element:air_crystal']
+points = 2
+craft_ingredients = ['element:mandrake_root', 'element:blood_stone']
+
+[[cards]]
+tag = 'potion:elixir_of_power'
+title = 'Эликсир Силы'
+type = 'potion:*'
+drop_elements = ['element:thought_energy']
+points = 2
+craft_ingredients = ['element:astral_energy', 'element:blood_stone']
+
+[[cards]]
+tag = 'potion:elixir_of_arcane_sight'
+title = 'Эликсир Тайного Зрения'
+type = 'potion:*'
+drop_elements = ['element:batwing']
+points = 2
+craft_ingredients = ['element:astral_energy', 'element:snake_eye']
+
+[[cards]]
+tag = 'potion:potion_polyglotum'
+title = 'Зелье "Полиглотум"'
+type = 'potion:*'
+drop_elements = ['element:belladonna']
+points = 2
+craft_ingredients = ['element:fern_flower', 'element:snake_eye']
+
+[[cards]]
+tag = 'potion:elixir_of_knowledge'
+title = 'Эликсир Знания'
+type = 'potion:*'
+drop_elements = ['element:spring_water']
+points = 2
+craft_ingredients = ['element:fern_flower', 'element:fiery_light']
+
+[[cards]]
+tag = 'potion:elixir_of_fire'
+title = 'Эликсир Огня'
+type = 'potion:*'
+drop_elements = ['element:the_quintessence_of_will']
+points = 2
+craft_ingredients = ['element:ether_wave', 'element:fiery_light']
+
+[[cards]]
+tag = 'potion:elixir_of_eternal_youth'
+title = 'Эликсир Вечной Молодости'
+type = 'potion:*'
+drop_elements = ['element:dragon_tooth']
+points = 2
+craft_ingredients = ['element:ether_wave', 'element:phoenix_feather']
+
+[[cards]]
+tag = 'potion:solution_of_eternity'
+title = 'Раствор Вечности'
+type = 'potion:*'
+drop_elements = ['element:mandrake_root']
+points = 2
+craft_ingredients = ['element:mushrooms', 'element:phoenix_feather']
+
+[[cards]]
+tag = 'potion:flask_of_divination'
+title = 'Настой Прорицания'
+type = 'potion:*'
+drop_elements = ['element:blood_stone']
+points = 2
+craft_ingredients = ['element:mushrooms', 'element:air_crystal']
+
+[[cards]]
+tag = 'potion:elixir_of_invisibility'
+title = 'Эликсир Невидимости'
+type = 'potion:*'
+drop_elements = ['element:astral_energy']
+points = 2
+craft_ingredients = ['element:thought_energy', 'element:air_crystal']
+
+[[cards]]
+tag = 'potion:isidas_mortum'
+title = 'Исидас Мортум'
+type = 'potion:*'
+drop_elements = ['element:snake_eye']
+points = 2
+craft_ingredients = ['element:thought_energy', 'element:batwing']
+
+[[cards]]
+tag = 'potion:elixir_of_oblivion'
+title = 'Эликсир Забвения'
+type = 'potion:*'
+drop_elements = ['element:fern_flower']
+points = 2
+craft_ingredients = ['element:belladonna', 'element:batwing']
+
+[[cards]]
+tag = 'potion:elixir_of_eternal_sleep'
+title = 'Эликсир Вечного Сна'
+type = 'potion:*'
+drop_elements = ['element:fiery_light']
+points = 2
+craft_ingredients = ['element:belladonna', 'element:spring_water']
+
+[[cards]]
+tag = 'potion:emanation_of_power'
+title = 'Эманация Власти'
+type = 'potion:*'
+drop_elements = ['element:ether_wave']
+points = 2
+craft_ingredients = ['element:the_quintessence_of_will', 'element:spring_water']
+
+[[cards]]
+tag = 'potion:solution-charm'
+title = 'Раствор-Оберег'
+type = 'potion:*'
+drop_elements = ['element:phoenix_feather']
+points = 2
+craft_ingredients = ['element:the_quintessence_of_will', 'element:dragon_tooth']
+
+[[cards]]
+tag = 'potion:elixir_of_loyalty'
+title = 'Эликсир Верности'
+type = 'potion:*'
+drop_elements = ['element:mushrooms']
+points = 2
+craft_ingredients = ['element:mandrake_root', 'element:dragon_tooth']
+
+[[cards]]
+tag = 'potion:love_potion'
+title = 'Любовное Зелье'
+type = 'potion:*'
+drop_elements = ['element:air_crystal']
+points = 2
+craft_ingredients = ['element:mandrake_root', 'element:blood_stone']
+
+[[cards]]
+tag = 'potion:elixir_of_power'
+title = 'Эликсир Силы'
+type = 'potion:*'
+drop_elements = ['element:thought_energy']
+points = 2
+craft_ingredients = ['element:astral_energy', 'element:blood_stone']
+
+[[cards]]
+tag = 'potion:elixir_of_arcane_sight'
+title = 'Эликсир Тайного Зрения'
+type = 'potion:*'
+drop_elements = ['element:batwing']
+points = 2
+craft_ingredients = ['element:astral_energy', 'element:snake_eye']
+
+[[cards]]
+tag = 'potion:potion_polyglotum'
+title = 'Зелье "Полиглотум"'
+type = 'potion:*'
+drop_elements = ['element:belladonna']
+points = 2
+craft_ingredients = ['element:fern_flower', 'element:snake_eye']
+
+[[cards]]
+tag = 'potion:elixir_of_knowledge'
+title = 'Эликсир Знания'
+type = 'potion:*'
+drop_elements = ['element:spring_water']
+points = 2
+craft_ingredients = ['element:fern_flower', 'element:fiery_light']
+
+[[cards]]
+tag = 'great_elixir:great_elixir_of_rebirth'
+title = 'Великий Эликсир Возрождения'
+type = 'great_elixir:*'
+drop_elements = ['element:batwing']
+points = 6
+craft_ingredients = ['potion:elixir_of_fire', 'potion:elixir_of_eternal_youth']
+
+[[cards]]
+tag = 'great_elixir:great_elixir_of_omen'
+title = 'Великий Эликсир Предзнаменования'
+type = 'great_elixir:*'
+drop_elements = ['element:spring_water']
+points = 6
+craft_ingredients = [
+    'potion:solution_of_eternity',
+    'potion:flask_of_divination',
+]
+
+[[cards]]
+tag = 'great_elixir:great_elixir_of_vanishing'
+title = 'Великий Эликсир Исчезновения'
+type = 'great_elixir:*'
+drop_elements = ['element:dragon_tooth']
+points = 6
+craft_ingredients = ['potion:elixir_of_invisibility', 'potion:isidas_mortum']
+
+[[cards]]
+tag = 'great_elixir:great_elixir_of_timelessness'
+title = 'Великий Эликсир Безвремения'
+type = 'great_elixir:*'
+drop_elements = ['element:blood_stone']
+points = 6
+craft_ingredients = [
+    'potion:elixir_of_oblivion',
+    'potion:elixir_of_eternal_sleep',
+]
+
+[[cards]]
+tag = 'great_elixir:great_elixir_of_protection'
+title = 'Великий Эликсир Защиты'
+type = 'great_elixir:*'
+drop_elements = ['element:snake_eye']
+points = 6
+craft_ingredients = ['potion:emanation_of_power', 'potion:solution-charm']
+
+[[cards]]
+tag = 'great_elixir:great_elixir_of_eternal_love'
+title = 'Великий Эликсир Вечной Любви'
+type = 'great_elixir:*'
+drop_elements = ['element:fiery_light']
+points = 6
+craft_ingredients = ['potion:elixir_of_loyalty', 'potion:love_potion']
+
+[[cards]]
+tag = 'great_elixir:great_elixir_of_might'
+title = 'Великий Эликсир Могущества'
+type = 'great_elixir:*'
+drop_elements = ['element:phoenix_feather']
+points = 6
+craft_ingredients = ['potion:elixir_of_power', 'potion:elixir_of_arcane_sight']
+
+[[cards]]
+tag = 'great_elixir:great_elixir_of_insight'
+title = 'Великий Эликсир Прозрения'
+type = 'great_elixir:*'
+drop_elements = ['element:air_crystal']
+points = 6
+craft_ingredients = ['potion:potion_polyglotum', 'potion:elixir_of_knowledge']
+
+[[cards]]
+tag = 'elixir:elixir_of_wisdom'
+title = 'Эликсир Мудрости'
+type = 'elixir:*'
+drop_elements = ['element:the_quintessence_of_will']
+points = 3
+craft_ingredients = [
+    'element:mandrake_root',
+    'element:astral_energy',
+    'element:air_crystal',
+]
+
+[[cards]]
+tag = 'elixir:elixir_of_plant_master'
+title = 'Эликсир Повелителя Растений'
+type = 'elixir:*'
+drop_elements = ['element:thought_energy']
+points = 3
+craft_ingredients = [
+    'element:belladonna',
+    'element:fiery_light',
+    'element:the_quintessence_of_will',
+]
+
+[[cards]]
+tag = 'elixir:telepathic_potion'
+title = 'Телепатическое Снадобье'
+type = 'elixir:*'
+drop_elements = ['element:ether_wave']
+points = 3
+craft_ingredients = [
+    'element:blood_stone',
+    'element:thought_energy',
+    'element:mushrooms',
+]
+
+[[cards]]
+tag = 'elixir:elixir_of_flight'
+title = 'Эликсир Полета'
+type = 'elixir:*'
+drop_elements = ['element:astral_energy']
+points = 3
+craft_ingredients = [
+    'element:ether_wave',
+    'element:spring_water',
+    'element:fern_flower',
+]
+
+[[cards]]
+tag = 'elixir:elixir_of_wisdom'
+title = 'Эликсир Мудрости'
+type = 'elixir:*'
+drop_elements = ['element:the_quintessence_of_will']
+points = 3
+craft_ingredients = [
+    'element:mandrake_root',
+    'element:astral_energy',
+    'element:air_crystal',
+]
+
+[[cards]]
+tag = 'elixir:elixir_of_plant_master'
+title = 'Эликсир Повелителя Растений'
+type = 'elixir:*'
+drop_elements = ['element:thought_energy']
+points = 3
+craft_ingredients = [
+    'element:belladonna',
+    'element:fiery_light',
+    'element:the_quintessence_of_will',
+]
+
+[[cards]]
+tag = 'elixir:telepathic_potion'
+title = 'Телепатическое Снадобье'
+type = 'elixir:*'
+drop_elements = ['element:ether_wave']
+points = 3
+craft_ingredients = [
+    'element:blood_stone',
+    'element:thought_energy',
+    'element:mushrooms',
+]
+
+[[cards]]
+tag = 'elixir:elixir_of_flight'
+title = 'Эликсир Полета'
+type = 'elixir:*'
+drop_elements = ['element:astral_energy']
+points = 3
+craft_ingredients = [
+    'element:ether_wave',
+    'element:spring_water',
+    'element:fern_flower',
+]
+
+[[cards]]
+tag = 'elixir:elixir_of_wisdom'
+title = 'Эликсир Мудрости'
+type = 'elixir:*'
+drop_elements = ['element:thought_energy']
+points = 3
+craft_ingredients = [
+    'element:mandrake_root',
+    'element:astral_energy',
+    'element:air_crystal',
+]
+
+[[cards]]
+tag = 'elixir:elixir_of_plant_master'
+title = 'Эликсир Повелителя Растений'
+type = 'elixir:*'
+drop_elements = ['element:ether_wave']
+points = 3
+craft_ingredients = [
+    'element:belladonna',
+    'element:fiery_light',
+    'element:the_quintessence_of_will',
+]
+
+[[cards]]
+tag = 'elixir:telepathic_potion'
+title = 'Телепатическое Снадобье'
+type = 'elixir:*'
+drop_elements = ['element:astral_energy']
+points = 3
+craft_ingredients = [
+    'element:blood_stone',
+    'element:thought_energy',
+    'element:mushrooms',
+]
+
+[[cards]]
+tag = 'elixir:elixir_of_flight'
+title = 'Эликсир Полета'
+type = 'elixir:*'
+drop_elements = ['element:the_quintessence_of_will']
+points = 3
+craft_ingredients = [
+    'element:ether_wave',
+    'element:spring_water',
+    'element:fern_flower',
+]
+
+[[cards]]
+tag = 'amulet:talisman_of_teleportation'
+title = 'Талисман Телепортации'
+type = 'amulet:*'
+drop_elements = ['element:blood_stone']
+points = 8
+craft_ingredients = ['potion:solution_of_eternity', 'elixir:elixir_of_flight']
+
+[[cards]]
+tag = 'amulet:talisman_of_hidden_knowledge'
+title = 'Талисман Скрытого Знания'
+type = 'amulet:*'
+drop_elements = ['element:fiery_light']
+points = 8
+craft_ingredients = ['potion:elixir_of_oblivion', 'elixir:elixir_of_wisdom']
+
+[[cards]]
+tag = 'amulet:talisman_of_the_beast_master'
+title = 'Талисман Повелителя Зверей'
+type = 'amulet:*'
+drop_elements = ['element:spring_water']
+points = 8
+craft_ingredients = [
+    'potion:potion_polyglotum',
+    'elixir:elixir_of_plant_master',
+]
+
+[[cards]]
+tag = 'amulet:talisman_palantirium'
+title = 'Талисман Палантириум'
+type = 'amulet:*'
+drop_elements = ['element:air_crystal']
+points = 8
+craft_ingredients = ['potion:elixir_of_loyalty', 'elixir:telepathic_potion']
+
+[[cards]]
+tag = 'great_amulet:grand_talisman_of_magic'
+title = 'Великий Талисман Магии'
+type = 'great_amulet:*'
+drop_elements = [
+    'element:phoenix_feather',
+    'element:thought_energy',
+    'element:dragon_tooth',
+]
+points = 10
+craft_ingredients = ['amulet:*', 'amulet:*']
+
+[[cards]]
+tag = 'supreme_elixir:supreme_elixir'
+title = 'Верховный Эликсир'
+type = 'supreme_elixir:*'
+drop_elements = [
+    'element:astral_energy',
+    'element:the_quintessence_of_will',
+    'element:ether_wave',
+]
+points = 10
+craft_ingredients = ['great_elixir:*', 'great_elixir:*']
+
+[[cards]]
+tag = 'powder:powder_of_incorporeality'
+title = 'Порошок Бестелесности'
+type = 'powder:*'
+drop_elements = ['element:mandrake_root']
+points = 4
+craft_ingredients = ['potion:elixir_of_eternal_sleep', 'element:batwing']
+
+[[cards]]
+tag = 'powder:powder_of_truth'
+title = 'Порошок Истины'
+type = 'powder:*'
+drop_elements = ['element:mushrooms']
+points = 4
+craft_ingredients = ['potion:elixir_of_knowledge', 'element:snake_eye']
+
+[[cards]]
+tag = 'powder:powder_of_destiny'
+title = 'Порошок Судьбы'
+type = 'powder:*'
+drop_elements = ['element:belladonna']
+points = 4
+craft_ingredients = ['potion:flask_of_divination', 'element:phoenix_feather']
+
+[[cards]]
+tag = 'powder:powder_of_control'
+title = 'Порошок Контроля'
+type = 'powder:*'
+drop_elements = ['element:fern_flower']
+points = 4
+craft_ingredients = ['potion:love_potion', 'element:dragon_tooth']
+
+[[cards]]
+tag = 'entity:essence_of_the_banshee'
+title = 'Сущность Баньши'
+type = 'entity:*'
+drop_elements = ['element:dragon_tooth']
+points = 8
+craft_ingredients = [
+    'potion:emanation_of_power',
+    'powder:powder_of_incorporeality',
+]
+
+[[cards]]
+tag = 'entity:essence_of_the_hippogriff'
+title = 'Сущность Гиппогрифа'
+type = 'entity:*'
+drop_elements = ['element:mushrooms']
+points = 8
+craft_ingredients = ['potion:isidas_mortum', 'elixir:elixir_of_flight']
+
+[[cards]]
+tag = 'entity:essence_of_the_unseen_guardian'
+title = 'Сущность Незримого Стража'
+type = 'entity:*'
+drop_elements = ['element:batwing']
+points = 8
+craft_ingredients = [
+    'potion:elixir_of_invisibility',
+    'powder:powder_of_destiny',
+]
+
+[[cards]]
+tag = 'entity:essence_of_the_basilisk'
+title = 'Сущность Василиска'
+type = 'entity:*'
+drop_elements = ['element:mandrake_root']
+points = 8
+craft_ingredients = [
+    'potion:elixir_of_arcane_sight',
+    'elixir:telepathic_potion',
+]
+
+[[cards]]
+tag = 'entity:essence_of_the_avocado_cadaver'
+title = 'Сущность Авокадо-Кадавра'
+type = 'entity:*'
+drop_elements = ['element:fern_flower']
+points = 8
+craft_ingredients = [
+    'potion:elixir_of_eternal_youth',
+    'elixir:elixir_of_plant_master',
+]
+
+[[cards]]
+tag = 'entity:essence_of_the_dragon'
+title = 'Сущность Дракона'
+type = 'entity:*'
+drop_elements = ['element:snake_eye']
+points = 8
+craft_ingredients = ['potion:elixir_of_power', 'powder:powder_of_control']
+
+[[cards]]
+tag = 'entity:essence_of_the_unicorn'
+title = 'Сущность Единорога'
+type = 'entity:*'
+drop_elements = ['element:belladonna']
+points = 8
+craft_ingredients = ['potion:solution-charm', 'elixir:elixir_of_wisdom']
+
+[[cards]]
+tag = 'entity:essence_of_the_fire_salamander'
+title = 'Сущность Огненной Саламандры'
+type = 'entity:*'
+drop_elements = ['element:phoenix_feather']
+points = 8
+craft_ingredients = ['potion:elixir_of_fire', 'powder:powder_of_truth']
+
+[[cards]]
+tag = 'spell:spell_of_transform'
+title = 'Заклятье Трансформы'
+type = 'spell:*'
+drop_elements = ['element:mandrake_root']
+spell = 'spell:spell_of_transform'
+
+[[cards]]
+tag = 'spell:spell_of_knowledge'
+title = 'Заклятье Познания'
+type = 'spell:*'
+drop_elements = ['element:belladonna']
+spell = 'spell:spell_of_knowledge'
+
+[[cards]]
+tag = 'spell:spell_of_destruction'
+title = 'Заклятье Разрушения'
+type = 'spell:*'
+drop_elements = ['element:snake_eye']
+spell = 'spell:spell_of_destruction'
+
+[[cards]]
+tag = 'spell:spell_of_transform'
+title = 'Заклятье Трансформы'
+type = 'spell:*'
+drop_elements = ['element:mandrake_root']
+spell = 'spell:spell_of_transform'
+
+[[cards]]
+tag = 'spell:spell_of_knowledge'
+title = 'Заклятье Познания'
+type = 'spell:*'
+drop_elements = ['element:belladonna']
+spell = 'spell:spell_of_knowledge'
+
+[[cards]]
+tag = 'spell:spell_of_destruction'
+title = 'Заклятье Разрушения'
+type = 'spell:*'
+drop_elements = ['element:snake_eye']
+spell = 'spell:spell_of_destruction'

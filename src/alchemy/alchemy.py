@@ -1,42 +1,55 @@
 from __future__ import annotations
 
 from queue import Queue
-from typing import Callable
+from typing import Any, Callable
 
-from alchemy.card_stack import CardStack
-from alchemy.cards import CraftableCard
-from alchemy.json_serializable import JsonSerializable
+from alchemy.enums import load_enums
+from alchemy.settings import Settings, load_settings
+from alchemy.stack import CardStack
+from alchemy.cards import CraftableCardModel, load_cards
 from alchemy.player import Player
-from alchemy.shelf import Shelf
+from alchemy.shelf import IngredientShelf
 
 
-class Alchemy(JsonSerializable):
+class Alchemy:
     """Игра. Здесь храняться игроки, стопка карт и шкаф элементов."""
 
     def __init__(
         self,
-        card_stack: CardStack,
+        config: dict[str, Any],
         players: list[Player],
-        cards_count: int,
         handler: Callable[[Alchemy, Player], bool],
     ) -> None:
-        self.stack: CardStack = card_stack
         self.players = players
-        self.cards_count: int = cards_count
         self.handler: Callable[[Alchemy, Player], bool] = handler
 
-        self.crafts: list[tuple[Player, CraftableCard]] = list()
-        self.shelf: Shelf = Shelf()
+        self.crafts: list[tuple[Player, CraftableCardModel]] = list()
+        self.shelf: IngredientShelf = IngredientShelf()
 
-        for _ in range(self.cards_count):
+        load_enums(config["enums"])
+        self.stack: CardStack = CardStack(load_cards(config["cards"]))
+        self.settings: Settings = load_settings(config["settings"])
+
+        self._prepare_complete = False
+
+    def prepare(self) -> None:
+        if self._prepare_complete:
+            return
+        
+        if self.settings.shuffle_cards_on_load:
+            self.stack.shuffle()
+
+        for _ in range(self.settings.hand_cards_count):
             self.shelf.put(self.stack.pop())
-            for player in players:
+            for player in self.players:
                 player.cards.append(self.stack.pop())
+        
+        self._prepare_complete = True
 
-        self._process()
-
-    def _process(self) -> None:
+    def process(self) -> None:
         """Запуск игры"""
+
+        self.prepare()
         queue: Queue[Player] = Queue(len(self.players))
         for player in self.players:
             queue.put(player)
@@ -50,7 +63,7 @@ class Alchemy(JsonSerializable):
 
             # Добор карт в начале хода
             while (
-                len(current_player.cards) < self.cards_count + 1
+                len(current_player.cards) < self.settings.hand_cards_count + 1
                 and self.stack.can_pop()
             ):
                 current_player.cards.append(self.stack.pop())

@@ -13,7 +13,7 @@ def drop_elements_handler(session: Alchemy, player: Player) -> bool:
     if card_number > 0:
         card = player.cards.pop(card_number - 1)
         for ingredient in card.drop_elements:
-            if not session.shelf.can_pop(ingredient):
+            if not session.shelf.can_get_element(ingredient):
                 player.points += 1
         session.shelf.put(card)
         print("Карта перемещена в шкаф.")

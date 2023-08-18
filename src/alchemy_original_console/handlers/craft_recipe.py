@@ -1,36 +1,30 @@
-from alchemy import Alchemy, Player, cards
+from alchemy import Alchemy, Player, cards, enums
 
-from alchemy_original_console.enums import CardType, Element
-from alchemy_original_console.handlers.consts import SHORT_TITLE_ENABLED
 from alchemy_original_console.handlers.utils import player_input, print_card
 
 
 def choice_element_card(
-    cards: list[cards.Card],
+    session: Alchemy,
+    cards: list[cards.CardModel],
     player: Player,
-) -> cards.Card:
-    if len(cards) < 1:
-        raise Exception("No cards")
-
+) -> cards.CardModel:
     print("Доступные карты в шкафу:\n")
     num: int = 1
     mxl: int = len(str(len(cards)))
     for c in cards:
         print(f"{num: >{mxl}}.", end=" ")
         num += 1
-        print_card(c, SHORT_TITLE_ENABLED)
+        print_card(c, session.settings.tags_is_visible)
 
     card_number = player_input(player, 1, mxl)
-    return cards[card_number]
+    return cards[card_number - 1]
 
 
 def choice_crafted_card(
-    crafts: list[tuple[Player, cards.CraftableCard]],
+    session: Alchemy,
+    crafts: list[tuple[Player, cards.CraftableCardModel]],
     player: Player,
-) -> tuple[Player, cards.CraftableCard]:
-    if len(crafts) < 1:
-        raise Exception("No crafts")
-
+) -> tuple[Player, cards.CraftableCardModel]:
     print("Доступные карты созданные игроками:\n")
     last_p: Player = None
     num: int = 1
@@ -41,37 +35,28 @@ def choice_crafted_card(
             print(f"Карты, созданные игроком {p.name}:\n")
         print(f"{num: >{mxl}}.", end=" ")
         num += 1
-        print_card(c, SHORT_TITLE_ENABLED, p == player)
+        print_card(c, session.settings.tags_is_visible, p == player)
 
     craft_number = player_input(player, 1, mxl)
-    return crafts[craft_number]
+    return crafts[craft_number - 1]
 
 
-def can_craft(session: Alchemy, card: cards.CraftableCard) -> bool:
-    cards_used: list[cards.Card] = list()
+def can_craft(session: Alchemy, card: cards.CraftableCardModel) -> bool:
+    cards_used: list[cards.CardModel] = list()
     for ingredient in card.craft_ingredients:
-        if isinstance(ingredient, Element):
-            if not session.shelf.can_pop(ingredient):
+        if isinstance(ingredient, enums.Element):
+            if not session.shelf.can_get_element(ingredient):
                 return False
-        elif isinstance(ingredient, CardType):
-            match ingredient:
-                case CardType.element:
-                    ...  # Любой элемент в оригинале не используется
-                case CardType.spell:
-                    ...  # Заклинание как ингредиент в оригинале не используется
-                case _:
-                    for _, craft in session.crafts:
-                        if craft.card_type == ingredient and craft not in cards_used:
-                            cards_used.append(craft)
-                            break
-                    else:
-                        return False
-        else:  # CraftableCard
+        elif isinstance(ingredient, enums.CardType):
             for _, craft in session.crafts:
-                if (
-                    craft.short_title == ingredient.short_title
-                    and craft not in cards_used
-                ):
+                if craft.type == ingredient and craft not in cards_used:
+                    cards_used.append(craft)
+                    break
+                else:
+                    return False
+        elif isinstance(ingredient, cards.CardTag):
+            for _, craft in session.crafts:
+                if craft.tag == ingredient and craft not in cards_used:
                     cards_used.append(craft)
                     break
             else:
@@ -79,10 +64,11 @@ def can_craft(session: Alchemy, card: cards.CraftableCard) -> bool:
     return True
 
 
-def craft(session: Alchemy, player: Player, card: cards.CraftableCard) -> None:
+def craft(session: Alchemy, player: Player, card: cards.CraftableCardModel) -> None:
     for ingredient in card.craft_ingredients:
-        if isinstance(ingredient, Element):
+        if isinstance(ingredient, enums.Element):
             c = choice_element_card(
+                session,
                 list(
                     filter(
                         lambda x: ingredient in x.drop_elements,
@@ -91,36 +77,31 @@ def craft(session: Alchemy, player: Player, card: cards.CraftableCard) -> None:
                 ),
                 player,
             )
-            session.shelf.pop(c)
+            session.shelf.get_card(c)
             card.buffer.append(c)
-        elif isinstance(ingredient, CardType):
-            match ingredient:
-                case CardType.element:
-                    ...  # Любой элемент в оригинале не используется
-                case CardType.spell:
-                    ...  # Заклинание как ингредиент в оригинале не используется
-                case _:
-                    p, c = choice_crafted_card(
-                        list(
-                            filter(
-                                lambda x: x[1].card_type == ingredient,
-                                session.crafts,
-                            )
-                        ),
-                        player,
-                    )
-                    session.crafts.remove((p, c))
-                    p.cards.remove(c)
-                    p.points += card.points // 2
-                    for i in c.buffer:
-                        session.shelf.put(i)
-                    card.buffer.append(c)
-            ...
-        else:  # CraftableCard
+        elif isinstance(ingredient, enums.CardType):
             p, c = choice_crafted_card(
+                session,
                 list(
                     filter(
-                        lambda x: x[1].short_title == ingredient.short_title,
+                        lambda x: x[1].type == ingredient,
+                        session.crafts,
+                    )
+                ),
+                player,
+            )
+            session.crafts.remove((p, c))
+            p.cards.remove(c)
+            p.points += card.points // 2
+            for i in c.buffer:
+                session.shelf.put(i)
+            card.buffer.append(c)
+        elif isinstance(ingredient, cards.CardTag):
+            p, c = choice_crafted_card(
+                session,
+                list(
+                    filter(
+                        lambda x: x[1].tag == ingredient,
                         session.crafts,
                     )
                 ),
@@ -140,7 +121,7 @@ def craft(session: Alchemy, player: Player, card: cards.CraftableCard) -> None:
 def craft_recipe_handler(session: Alchemy, player: Player) -> bool:
     craftable_cards = list(
         filter(
-            lambda x: isinstance(x, cards.CraftableCard),
+            lambda x: isinstance(x, cards.CraftableCardModel),
             player.cards,
         )
     )
@@ -148,7 +129,7 @@ def craft_recipe_handler(session: Alchemy, player: Player) -> bool:
     for index, card in enumerate(craftable_cards):
         print(
             f"{index + 1}. {card.title}"
-            + (f" ({card.short_title})" if SHORT_TITLE_ENABLED else "")
+            + (f" ({card.tag.tag})" if session.settings.tags_is_visible else "")
         )
     print("0. Отмена")
 

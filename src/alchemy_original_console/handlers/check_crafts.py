@@ -1,6 +1,5 @@
 from alchemy import Alchemy, Player
 
-from alchemy_original_console.handlers.consts import SHORT_TITLE_ENABLED
 from alchemy_original_console.handlers.utils import print_card
 
 
@@ -11,7 +10,7 @@ def check_crafts_handler(session: Alchemy, player: Player) -> None:
         if p != last_p:
             last_p = p
             print(f"Карты, созданные игроком {p.name}:\n")
-        print_card(c, SHORT_TITLE_ENABLED, p == player)
+        print_card(c, session.settings.tags_is_visible, p == player)
 
 
 __all__ = (check_crafts_handler,)

@@ -1,77 +1,71 @@
-from alchemy.card_stack import CardStack
-from alchemy.cards import Card, AbcElement
-from alchemy.json_serializable import JsonSerializable
+from __future__ import annotations
 
-class Shelf(JsonSerializable):
-    def __init__(self) -> None:
-        self.card_stacks: dict[int, CardStack] = dict()
+from typing import Callable
 
-    def can_pop(self, element: AbcElement) -> bool:
-        """Можно ли достать карту из шкафа с конкретным элементом
+from alchemy.cards import CardModel
+from alchemy.enums import Element
+from alchemy.stack import CardStack
 
-        Args:
-            element (AbcElement): искомый элемент
 
-        Returns:
-            bool: Истина если можно, Ложь если не можно
-        """
-        i_key = element.index
-        for key, card_stack in self.card_stacks.items():
-            if i_key & key and card_stack.can_pop():
+def default_search_algorithm(search_key, key):
+    return search_key & key
+
+
+class IngredientShelf:
+    def __init__(
+        self,
+        search_algorithm: Callable[[int, int], bool] = default_search_algorithm,
+    ) -> None:
+        self._shelf: dict[int, CardStack] = dict()
+
+        # NOTE: may be custom for Element.any in DLC's
+        self.search_algorithm = search_algorithm
+
+    def can_get_element(self, element: Element) -> bool:
+        search_key = element.index
+        for key in self._shelf.keys():
+            if self.search_algorithm(search_key, key):
                 return True
         else:
             return False
 
-    def pop(self, card: Card) -> None:
-        """Удалить карту с конкретным элементом из шкафа
+    def get_element(self, element: Element) -> CardModel:
+        assert self.can_get_element(element)
 
-        Args:
-            element (AbcElement): искомый элемент
+        search_key = element.index
+        for key, stack in self._shelf.items():
+            if self.search_algorithm(search_key, key):
+                card = stack.pop()
+                if not stack.can_pop():
+                    self._shelf.pop(key)
+                return card
 
-        Returns:
-            Card: Карта с искомым элементом
-        """
-        assert self.can_pop(card.drop_elements[0])
+    def get_card(self, card: CardModel) -> None:
+        assert self.can_get_element(card.drop_elements[0])
 
-        for key, card_stack in self.card_stacks.items():
-            if card_stack.top().short_title == card.short_title:
-                card = card_stack.pop()
-                if not card_stack.can_pop():
-                    self.card_stacks.pop(key)
-                break
+        search_key = sum([element.index for element in card.drop_elements])
+        for key, stack in self._shelf.items():
+            if self.search_algorithm(search_key, key):
+                stack.pop()
+                if not stack.can_pop():
+                    self._shelf.pop(key)
+                return
 
-    def put(self, card: Card) -> None:
-        """Положить карту в шкаф
+    def put(self, card: CardModel) -> None:
+        key = sum([element.index for element in card.drop_elements])
 
-        Args:
-            card (Card): карта
-        """
-        key = sum([i.index for i in card.drop_elements])
+        if self._shelf.get(key, None) is None:
+            self._shelf[key] = CardStack()
 
-        if self.card_stacks.get(key, None) is None:
-            self.card_stacks[key] = CardStack()
+        self._shelf[key].put(card)
 
-        self.card_stacks[key].put(card)
+    def put_down(self, card: CardModel) -> None:
+        key = sum([element.index for element in card.drop_elements])
 
-    def put_down(self, card: Card) -> None:
-        """Положить карту в шкаф снизу
+        if self._shelf.get(key, None) is None:
+            self._shelf[key] = CardStack()
 
-        Args:
-            card (Card): карта
-        """
-        key = sum([i.index for i in card.drop_elements])
+        self._shelf[key].put_down(card)
 
-        if self.card_stacks.get(key, None) is None:
-            self.card_stacks[key] = CardStack()
-
-        self.card_stacks[key].put_down(card)
-
-    def toplist(self) -> list[Card]:
-        return [
-            card_stack.top()
-            for card_stack in self.card_stacks.values()
-            if card_stack.can_pop()
-        ]
-
-
-__all__ = (Shelf,)
+    def toplist(self) -> list[CardModel]:
+        return [stack.top() for stack in self._shelf.values() if stack.can_pop()]

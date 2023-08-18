@@ -1,12 +1,11 @@
-from alchemy.cards import Card
-from alchemy.json_serializable import JsonSerializable
+from alchemy.cards import CardModel
 
 
-class Player(JsonSerializable):
+class Player:
     """Игрок, содержит: имя, список карт, очки, список созданных карт"""
 
     def __init__(self, name: str) -> None:
-        self.cards: list[Card] = list()
+        self.cards: list[CardModel] = list()
         self.name: str = name
         self.points: int = 0
 

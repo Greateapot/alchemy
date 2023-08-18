@@ -1,20 +1,21 @@
-# Оригинальные правила (вроде) настольной игры. 
+# Оригинальные правила (вроде) настольной игры.
 
 from __future__ import annotations
 
+from typing import Any
+
 from alchemy import Alchemy, Player
 
-from .cards import create_card_stack
 from .handlers import handler
 
 
-def create_session(players: list[str]) -> Alchemy:
-    card_stack = create_card_stack()
-    card_stack.shuffle()
+def create_session(
+    config: dict[str, Any],
+    players: list[str],
+) -> Alchemy:
     return Alchemy(
-        card_stack,
+        config,
         [Player(name) for name in players if name],
-        4,
         handler,
     )
 

@@ -1,14 +1,11 @@
 from alchemy import Alchemy, Player, cards
-
-from alchemy_original_console.enums import SpellType
-from alchemy_original_console.handlers.consts import SHORT_TITLE_ENABLED
 from alchemy_original_console.handlers.utils import player_input, print_card
 
 
 def cast_spell_of_destruction(
     session: Alchemy,
     player: Player,
-    card: cards.SpellCard,
+    card: cards.SpellCardModel,
 ) -> bool:
     player_crafts = list(filter(lambda x: x[0] == player, session.crafts))
 
@@ -20,7 +17,7 @@ def cast_spell_of_destruction(
     sv = len(str(len(player_crafts)))
     for index, player_craft in enumerate(player_crafts):
         print(f"{index+1: >{sv}}.", end=" ")
-        print_card(player_craft[1], SHORT_TITLE_ENABLED, True)
+        print_card(player_craft[1], session.settings.tags_is_visible, True)
     print("0. Отмена")
 
     craft_number = player_input(player, 0, len(player_crafts))
@@ -37,7 +34,7 @@ def cast_spell_of_destruction(
     sv = len(str(len(craft_cards)))
     for index, craft_card in enumerate(craft_cards):
         print(f"{index+1: >{sv}}.", end=" ")
-        print_card(craft_card, SHORT_TITLE_ENABLED)
+        print_card(craft_card, session.settings.tags_is_visible)
     print("0. Отмена")
 
     craft_card_number = player_input(player, 0, len(craft_cards))
@@ -66,12 +63,14 @@ def cast_spell_of_destruction(
 def cast_spell_of_knowledge(
     session: Alchemy,
     player: Player,
-    card: cards.SpellCard,
+    card: cards.SpellCardModel,
 ) -> bool:
     shelf_cards = session.shelf.toplist()
     print("Карты в шкафу:\n")
-    for shelf_card in shelf_cards:
-        print_card(shelf_card, SHORT_TITLE_ENABLED)
+    sv = len(str(len(shelf_cards)))
+    for index, shelf_card in enumerate(shelf_cards):
+        print(f"{index+1: >{sv}}.", end=" ")
+        print_card(shelf_card, session.settings.tags_is_visible)
     print("0. Отмена")
 
     shelf_card_number = player_input(player, 0, len(shelf_cards))
@@ -82,7 +81,7 @@ def cast_spell_of_knowledge(
 
     shelf_card = shelf_cards[shelf_card_number - 1]
 
-    session.shelf.pop(shelf_card)
+    session.shelf.get_card(shelf_card)
     player.cards.remove(card)
     player.cards.append(shelf_card)
 
@@ -95,7 +94,7 @@ def cast_spell_of_knowledge(
 def cast_spell_of_transform(
     session: Alchemy,
     player: Player,
-    card: cards.SpellCard,
+    card: cards.SpellCardModel,
 ) -> bool:
     player_crafts = list(filter(lambda x: x[0] == player, session.crafts))
 
@@ -107,7 +106,7 @@ def cast_spell_of_transform(
     sv = len(str(len(player_crafts)))
     for index, player_craft in enumerate(player_crafts):
         print(f"{index+1: >{sv}}.", end=" ")
-        print_card(player_craft[1], SHORT_TITLE_ENABLED, True)
+        print_card(player_craft[1], session.settings.tags_is_visible, True)
     print("0. Отмена")
 
     craft_number = player_input(player, 0, len(player_crafts))
@@ -121,7 +120,7 @@ def cast_spell_of_transform(
     shelf_cards = session.shelf.toplist()
     print("Карты в шкафу:\n")
     for shelf_card in shelf_cards:
-        print_card(shelf_card, SHORT_TITLE_ENABLED)
+        print_card(shelf_card, session.settings.tags_is_visible)
     print("0. Отмена")
 
     shelf_card_number = player_input(player, 0, len(shelf_cards))
@@ -133,7 +132,7 @@ def cast_spell_of_transform(
     shelf_card = shelf_cards[shelf_card_number - 1]
 
     player.cards.remove(card)
-    session.shelf.pop(shelf_card)
+    session.shelf.get_card(shelf_card)
     session.crafts.remove(player_craft)
     session.crafts.append((player, shelf_card))
 
@@ -149,18 +148,19 @@ def cast_spell_of_transform(
 
 
 def cast_spell_handler(session: Alchemy, player: Player) -> bool:
-    spells = list(
+    spells: list[cards.SpellCardModel] = list(
         filter(
-            lambda x: isinstance(x, cards.SpellCard),
+            lambda x: isinstance(x, cards.SpellCardModel),
             player.cards,
         )
     )
 
     print("Применение заклинания. Список доступных заклинаний:\n")
+
     for index, card in enumerate(spells):
         print(
             f"{index + 1}. {card.title}"
-            + (f" ({card.short_title})" if SHORT_TITLE_ENABLED else "")
+            + (f" ({card.tag.tag})" if session.settings.tags_is_visible else "")
         )
     print("0. Отмена")
 
@@ -170,17 +170,17 @@ def cast_spell_handler(session: Alchemy, player: Player) -> bool:
         print("Отмена.")
         return False
 
-    card: cards.SpellCard = spells[card_number - 1]
+    card: cards.SpellCardModel = spells[card_number - 1]
 
     # NOTE: в оригинале все заклинания позволяют сыграть еще одну карту,
     # след. все функции заклинаний должны возвращать False, даже если
     # заклинание успешно применено.
-    match card.spell_type:
-        case SpellType.spell_of_destruction:
+    match card.spell.value:
+        case "spell_of_destruction":
             return cast_spell_of_destruction(session, player, card)
-        case SpellType.spell_of_knowledge:
+        case "spell_of_knowledge":
             return cast_spell_of_knowledge(session, player, card)
-        case SpellType.spell_of_transform:
+        case "spell_of_transform":
             return cast_spell_of_transform(session, player, card)
         case _:
-            raise Exception(f"Неизвестный тип заклинания: {card.spell_type}")
+            raise Exception(f"Неизвестный тип заклинания: {card.spell.value}")
